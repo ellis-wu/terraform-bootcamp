@@ -1,0 +1,5 @@
+.terraform/
+*.png
+*.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
