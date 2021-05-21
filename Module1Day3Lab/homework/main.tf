@@ -10,6 +10,9 @@ module "vpc" {
   source = "./modules/vpc"
 }
 
+module "s3" {
+  source = "./modules/s3"
+}
 
 resource "aws_security_group" "demo_sg" {
   vpc_id = module.vpc.vpc_id
@@ -42,17 +45,6 @@ resource "aws_security_group" "demo_sg" {
 resource "aws_key_pair" "public_key" {
   key_name   = "demo-keypair"
   public_key = file("~/.ssh/id_rsa.pub")
-}
-
-resource "aws_instance" "web_server" {
-  ami             = data.aws_ssm_parameter.cathay_ami.value
-  instance_type   = "t2.micro"
-  subnet_id       = module.vpc.subnet_id
-  security_groups = [aws_security_group.demo_sg.id]
-  tags = {
-    Name = "${terraform.workspace}-example-web-server"
-  }
-  user_data = fileexists("./scripts.sh") ? file("./scripts.sh") : null
 }
 
 resource "aws_instance" "remote_server" {
