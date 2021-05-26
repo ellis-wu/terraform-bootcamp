@@ -11,7 +11,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "elliswu"
 
-    workspace = {
+    workspaces {
       name = "terraform-bootcamp"
     }
   }
